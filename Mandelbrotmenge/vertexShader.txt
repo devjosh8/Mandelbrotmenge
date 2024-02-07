@@ -4,9 +4,15 @@
 
 layout(location = 0) in vec3 a_position;
 
+out vec3 translation;
+out float zoom;
+
+uniform vec3 a_translation;
+uniform float a_zoom;
 
 void main() {
 	
 	gl_Position = vec4(a_position.x, a_position.y, a_position.z, 1.0);
-
+	translation = a_translation;
+	zoom = a_zoom;
 }

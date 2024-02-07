@@ -5,6 +5,19 @@
 #include "shader.h"
 
 
+
+// Variablen
+float x_translation = 0.0f;
+float y_translation = 0.0f;
+
+double zoom = 4.0f;
+
+
+// Zeitberechnungen
+float delta_time = 0;
+float current_frame = 0;
+float last_frame = 0;
+
 // Callbacks
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -23,7 +36,7 @@ int main() {
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 
-	GLFWwindow* window = glfwCreateWindow(1280, 720, "Mandelbrotmenge", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(1280, 720, "Mandelbrotmenge von Josh", NULL, NULL);
 
 	if (window == NULL) {
 		std::cout << "Konnte kein GLFW-Fenster initialisieren!" << std::endl;
@@ -82,6 +95,30 @@ int main() {
 
 	while (!glfwWindowShouldClose(window)) {
 
+		current_frame = glfwGetTime();
+		delta_time = current_frame - last_frame; 
+		last_frame = current_frame;
+
+		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+			y_translation += 1.0f * delta_time * zoom;
+		}
+		if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
+			x_translation -= 1.0f * delta_time * zoom;
+		}
+		if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+			y_translation -= 1.0f * delta_time * zoom;
+		}
+		if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
+			x_translation += 1.0f * delta_time * zoom;
+		}
+		if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+			zoom -= zoom/3 * delta_time;
+		}
+		if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
+			zoom += zoom / 3 * delta_time;
+		}
+
+
 		// Zeug rendern
 
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -90,6 +127,8 @@ int main() {
 
 		
 		shader.bind();
+		glUniform3f(shader.getUniformLocation("a_translation"), x_translation, y_translation, 0.0f);
+		glUniform1f(shader.getUniformLocation("a_zoom"), zoom);
 		glBindVertexArray(vaoID);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
@@ -115,4 +154,5 @@ void keyinput_callback(GLFWwindow* window, int key, int scancode, int action, in
 {
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, true);
+
 }
