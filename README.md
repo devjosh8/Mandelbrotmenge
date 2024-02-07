@@ -11,7 +11,7 @@ Dabei werden Realteil und Imaginärteil der Zahl jeweils
 seperat behandelt und berechnet.
 
 ## Steuerung
-**WASD** Mandelbrotmenge bewegen  
-**Leertaste** Hineinzoomen  
-**Shift** Herauszoomen  
+**WASD**: Mandelbrotmenge bewegen  
+**Leertaste**: Hineinzoomen  
+**Shift**: Herauszoomen  
 
