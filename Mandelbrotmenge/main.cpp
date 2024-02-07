@@ -45,13 +45,16 @@ int main() {
 	glfwSetKeyCallback(window, keyinput_callback);
 
 
-	GLfloat vertices[] = { -1, -1, 0, // unten links
-					  -1,  1, 0, // oben links
-					   1,  1, 0, // oben rechts
-					   1, -1, 0 }; // unten rechts
 
-	GLubyte indices[] = { 0,1,2, // erstes dreieck
-					 0,2,3 }; // zweites dreieck
+	GLfloat vertices[] = { -1, -1, 0, // bottom left corner
+					  -1,  1, 0, // top left corner
+					   1,  1, 0, // top right corner
+					   1, -1, 0 }; // bottom right corner
+
+	unsigned int indices[] = {  // note that we start from 0!
+		0, 1, 3,  // first Triangle
+		1, 2, 3   // second Triangle
+	};
 
 	unsigned int vaoID, vboID, eboID;
 
@@ -70,23 +73,31 @@ int main() {
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
 
 	Shader shader("vertexShader.txt", "fragmentShader.txt");
+	shader.init();
 	shader.bind();
 
 	while (!glfwWindowShouldClose(window)) {
 
 		// Zeug rendern
 
-		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 
-		glDrawArrays(GL_TRIANGLES, 0, 6);
+		
+		shader.bind();
+		glBindVertexArray(vaoID);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 		glfwPollEvents();
 		glfwSwapBuffers(window);
 	}
+
+	shader.~Shader();
 
 	glfwTerminate();
 	return 0;
