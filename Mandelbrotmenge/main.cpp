@@ -2,7 +2,7 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
-
+#include "shader.h"
 
 
 // Callbacks
@@ -69,6 +69,10 @@ int main() {
 
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+
+
+	Shader shader("vertexShader.txt", "fragmentShader.txt");
+	shader.bind();
 
 	while (!glfwWindowShouldClose(window)) {
 

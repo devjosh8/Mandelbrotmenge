@@ -1,0 +1,12 @@
+#version 330
+
+#extension GL_ARB_separate_shader_objects : enable
+
+layout(location = 0) in vec3 a_position;
+
+
+void main() {
+	
+	gl_Position = vec4(a_position.x, a_position.y, a_position.z, 1.0);
+
+}
