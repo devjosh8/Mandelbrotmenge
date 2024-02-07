@@ -3,5 +3,5 @@
 
 
 ## Bilder
-![Beispielbild]([http://url/to/img.png](https://imgur.com/undefined)https://imgur.com/undefined)
+![Screenshot](Screenshot.png)
 
