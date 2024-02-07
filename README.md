@@ -17,6 +17,6 @@ seperat behandelt und berechnet.
 
 ## Download
 Free to use, gerne die bereitgestellte EXE herunterladen, kompiliert mit Visual C++ 14.
-Die EXE kann nur ausgeführt werden wenn die vertexShader.txt und fragmentShader.txt Dateien sich im selben Ordner befinden.  
+Die EXE kann nur ausgeführt werden wenn sich die vertexShader.txt und fragmentShader.txt Dateien im selben Ordner befinden.  
 Viel Spaß. :)
 
