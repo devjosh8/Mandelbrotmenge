@@ -1,0 +1,74 @@
+#version 420
+
+out vec4 fragColor;
+
+in vec3 translation;
+in float zoom;
+
+#define MAX_ITERATIONS 500
+
+int iterations(float real, float imaginary) {
+    
+    int iterations = 0;
+
+    float current_real = 0.0f;
+    float current_imaginary = 0.0f;
+
+
+    // Neue Zahl = Alte Zahl^2 + AnfangsZahl
+
+    float betrag = 0.0f;
+
+    while(true) {
+        
+        // Formeln entstehen aus dem Ausmultiplizieren der Formel z^2 = (a+bi)^2
+
+        float real_temp = (current_real*current_real - current_imaginary * current_imaginary) + real;
+        float imaginary_temp = 2*current_real*current_imaginary + imaginary;
+
+        betrag = real_temp*real_temp + imaginary_temp*imaginary_temp;
+
+        if(betrag > 4.0f) {
+            break;
+        }
+
+        iterations++;   
+        if(iterations == MAX_ITERATIONS)break;
+
+        current_real = real_temp;
+        current_imaginary = imaginary_temp;
+    }
+
+    return iterations;
+
+}
+
+
+
+void main()
+{
+    
+    vec4 position = vec4(gl_FragCoord.x / 1280.0f * 3.0f, gl_FragCoord.x / 720.0f * 2.0f, 0.0f, 0.0f);
+    
+    float real = (gl_FragCoord.x / 1280.0f - 0.5f) * zoom + translation.x;
+    float imaginary = (gl_FragCoord.y / 720.0f - 0.7f) * zoom*0.7f + translation.y;
+
+    if(real == 0) {
+        fragColor = vec4(1.0f, 1.0f, 1.0f, 1.0f);
+        return;
+    }
+    if(imaginary == 0) {
+        fragColor = vec4(1.0f, 1.0f, 1.0f, 1.0f);
+        return;
+    }
+
+    int iterations = iterations(real, imaginary);
+
+    if(iterations == MAX_ITERATIONS) {
+          fragColor = vec4(0.0f, 0.0f, 0.0f, 1.0);
+    } else {
+
+        fragColor = vec4(0.0f, float(iterations) / MAX_ITERATIONS, 0.0f, 1.0f);
+
+    }
+}
