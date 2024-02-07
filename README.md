@@ -15,3 +15,6 @@ seperat behandelt und berechnet.
 **Leertaste**: Hineinzoomen  
 **Shift**: Herauszoomen  
 
+## Download
+Free to use, gerne die bereitgestellte EXE herunterladen, kompiliert mit Visual C++ 14.
+
