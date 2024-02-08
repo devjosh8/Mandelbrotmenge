@@ -74,7 +74,7 @@ int main() {
 	glGenVertexArrays(1, &vaoID);
 	glGenBuffers(1, &vboID);
 	glGenBuffers(1, &eboID);
-
+	 
 	glBindVertexArray(vaoID);
 
 	glBindBuffer(GL_ARRAY_BUFFER, vboID);
@@ -99,6 +99,9 @@ int main() {
 		delta_time = current_frame - last_frame; 
 		last_frame = current_frame;
 
+
+		//std::cout << "FPS: " << 1 / delta_time << std::endl;
+
 		if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
 			y_translation += 1.0f * delta_time * zoom;
 		}
@@ -112,14 +115,11 @@ int main() {
 			x_translation += 1.0f * delta_time * zoom;
 		}
 		if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-			zoom -= zoom/3 * delta_time;
+			zoom -= zoom/3 * delta_time * 2;
 		}
 		if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
-			zoom += zoom / 3 * delta_time;
+			zoom += zoom / 3 * delta_time * 2;
 		}
-
-
-		// Zeug rendern
 
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
