@@ -10,7 +10,6 @@ in float zoom;
 int iterations(float real, float imaginary) {
     
     int iterations = 0;
-
     float current_real = 0.0f;
     float current_imaginary = 0.0f;
 
@@ -67,8 +66,18 @@ void main()
     if(iterations == MAX_ITERATIONS) {
           fragColor = vec4(0.0f, 0.0f, 0.0f, 1.0);
     } else {
+        if(iterations < 10) {
+            fragColor = vec4(float(iterations) / 10.0f, 0.0f, 0.0f, 1.0f);
+        } else if(iterations < 50) {
+            fragColor = vec4(float(iterations) / 100.0f, float(iterations) / MAX_ITERATIONS, float(iterations) / 25.0f, 1.0f);
+        } else if(iterations < 100) {
+            fragColor = vec4(float(iterations) / MAX_ITERATIONS, float(iterations) / 100.0f, float(iterations) / MAX_ITERATIONS, 1.0f);
+        } else {
+            fragColor = vec4(float(iterations) / MAX_ITERATIONS, 0.0f, float(iterations) / MAX_ITERATIONS, 1.0f);
+        }
 
-        fragColor = vec4(0.0f, float(iterations) / MAX_ITERATIONS, 0.0f, 1.0f);
-
+        
+        
+        
     }
 }
